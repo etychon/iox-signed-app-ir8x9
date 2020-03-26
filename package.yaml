@@ -1,0 +1,15 @@
+descriptor-schema-version: "2.2"
+info:
+  name: hello-world test
+  version: latest
+app:
+  cpuarch: x86_64
+  resources:
+    network:
+    - interface-name: eth0
+      ports: {}
+    profile: c1.tiny
+  startup:
+    rootfs: rootfs.tar
+    target: "/var/helloworld/helloworld"
+  type: docker

@@ -1,0 +1,15 @@
+##
+## Based on:
+## https://www.cisco.com/c/en/us/support/docs/cloud-systems-management/iox/212472-configure-iox-package-signature-validati.html
+## 
+openssl genrsa -out rootca-key.pem 2048
+openssl req -x509 -new -nodes -key rootca-key.pem -sha256 -days 4096 -out rootca-cert.pem
+echo "iox app root ca v1">info.txt
+cp rootca-cert.pem ca-chain.cert.pem
+tar -czf trustanchorv1.tar.gz ca-chain.cert.pem info.txt
+## Now import Trust anchor to IR8x9 using local manager
+## and enable app signature verification
+openssl genrsa -out app-key.pem 2048
+openssl req -new -key app-key.pem -out app.csr
+openssl x509 -req -in app.csr -CA rootca-cert.pem -CAkey rootca-key.pem -CAcreateserial -out app-cert.pem -days 4096 -sha256
+ 

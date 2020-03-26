@@ -1,0 +1,4 @@
+# Compile the C code statically so that it does not require any library to run
+docker build -t iox-signed-app-ir8x9 .
+ioxclient docker package iox-signed-app-ir8x9  . -n iox-helloworld-notsigned-ir8x9
+ioxclient docker package iox-signed-app-ir8x9  . --rsa-key app-key.pem --certificate app-cert.pem -n iox-helloworld-signed-ir8x9
